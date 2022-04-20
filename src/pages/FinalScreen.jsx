@@ -3,16 +3,16 @@ import { Box } from '@mui/system'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {handelResetApp} from '../redux/actions'
+import {RESET_APP} from '../app/reducer'
 
 export const FinalScreen = () => {
-  const { score } = useSelector(state => state)
+  const { score } = useSelector(state => state.entities)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
 
   const handelClick = () => {
-    dispatch(handelResetApp())
+    dispatch(RESET_APP())
     navigate('/')
    }
 

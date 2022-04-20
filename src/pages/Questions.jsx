@@ -2,9 +2,9 @@ import { Box, Button, CircularProgress, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import client from '../api/useAxios'
-import { handelChangeScore } from '../redux/actions'
-import {decode} from 'html-entities';
+import { client } from '../api/useAxios'
+import { CHANGE_SCORE } from '../app/reducer'
+import { decode } from 'html-entities';
 
 
 const getRandom = (max) => {
@@ -18,7 +18,7 @@ export const Questions = () => {
     question_type,
     amount_of_questions,
     score
-  } = useSelector(state => state)
+  } = useSelector(state => state.entities)
   const [questionIndex, setQuestionIndex] = useState(0)
   const [questions, setQuestions] = useState({})
   const [questionUser, setQeustionUser] = useState({})
@@ -61,17 +61,20 @@ export const Questions = () => {
     if (questions.length > 0) {
       setQeustionUser(questions[questionIndex])
     }
-  if (questionUser.type) {
-    let answers = [...questionUser.incorrect_answers]
-    answers.splice(
-      getRandom(answers.length),
-      0,
-      questionUser.correct_answer
-    )
-    setoption(answers)
-  }
+    if (questionUser.type) {
+      let answers = [...questionUser.incorrect_answers]
+      answers.splice(
+        getRandom(answers.length),
+        0,
+        questionUser.correct_answer
+      )
+      setoption(answers)
+    }
 
-  }, [questionIndex, questionUser.correct_answer, questionUser.incorrect_answers, questionUser.length, questions])
+  }, [questionIndex,
+    questionUser.correct_answer,
+    questionUser.incorrect_answers,
+    questionUser.length, questions])
 
   if (loading) {
     return (
@@ -83,12 +86,12 @@ export const Questions = () => {
 
   const handelClick = (name) => {
     if (name === questionUser.correct_answer) {
-      dispatch(handelChangeScore(score + 1))
+      dispatch(CHANGE_SCORE(score + 1))
     }
     console.log(questionIndex)
     if (questionIndex < questions.length - 1) {
       setQuestionIndex(questionIndex + 1)
-    }else{
+    } else {
       navigate('/finalscreen')
     }
 

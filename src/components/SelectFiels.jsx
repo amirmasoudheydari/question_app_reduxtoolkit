@@ -3,13 +3,14 @@ import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 
 
+
+
 import {
-  handelChangeCategory,
-  handelChangeAmount,
-  handelChangeDifficulty,
-  handelChangeScore,
-  handelChangeType
-} from '../redux/actions'
+  CHANGE_CATEGORY,
+  CHANGE_DIFFICULTY, 
+  CHANGE_TYPE
+
+} from '../app/reducer'
 
 export const SelectFieldes = props => {
   const [value, setValue] = useState('')
@@ -18,16 +19,16 @@ export const SelectFieldes = props => {
 
   const handelChange = e => {
     setValue(e.target.value)
-    
+
     switch (lable) {
       case 'Category':
-        dispatch(handelChangeCategory(e.target.value))
+        dispatch(CHANGE_CATEGORY(e.target.value))
         break;
-        case 'Difficulty':
-        dispatch(handelChangeDifficulty(e.target.value))
+      case 'Difficulty':
+        dispatch(CHANGE_DIFFICULTY(e.target.value))
         break;
       case 'Type':
-        dispatch(handelChangeType(e.target.value))
+        dispatch(CHANGE_TYPE(e.target.value))
         break;
       default:
         break;

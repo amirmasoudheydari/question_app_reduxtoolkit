@@ -1,27 +1,13 @@
 import { Button, CircularProgress, Typography } from '@mui/material'
 import { Box } from '@mui/system'
+import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import {useEffect, useState} from 'react'
 
 import { SelectFieldes, TextFildeComp } from '../components'
-import client from '../api/useAxios'
-export const Setting = () => {
-  const [category, setCategory] = useState({})
-  const [loading, setLoading] = useState(true)
-
+export const Setting =  () => {
   const history = useNavigate()
-  
+  const {status, category} = useSelector(state => state)
 
-  
-  const getInfo = url => {
-    client()
-      .get(url)
-      .then(res => setCategory(res.data.trivia_categories))
-      .finally(() => setLoading(false))
-  }
-  useEffect(() => {
-    getInfo('/api_category.php')
-  },[])
   
   
   const handelSubmit = (e) => {
@@ -41,14 +27,13 @@ export const Setting = () => {
   ]
 
   
-    if (loading) {
+    if (status === 'loading') {
       return (
         <Box>
           <CircularProgress size='60px' />
         </Box>
       )
     }
-
 
 
   return (

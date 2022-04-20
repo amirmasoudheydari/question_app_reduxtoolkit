@@ -1,16 +1,18 @@
 import { FormControl, TextField } from '@mui/material'
 import { Box } from '@mui/system'
 import React from 'react'
-import {useDispatch} from 'react-redux'
-import {handelChangeAmount} from '../redux/actions'
+import { useDispatch } from 'react-redux'
+import {
+  CHANGE_AMOUNT
+} from '../app/reducer'
 
 
 export const TextFildeComp = () => {
   const dispatch = useDispatch()
 
   const handelChange = (e) => {
-    const {value} = e.target
-    dispatch(handelChangeAmount(value))
+    const { value } = e.target
+    dispatch(CHANGE_AMOUNT(value))
   }
 
 
